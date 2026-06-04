@@ -351,6 +351,26 @@ class Legacy014PacketTest {
     }
 
     @Test
+    @DisplayName("RemoveBlock 应按 0.14.3 旧整型坐标解码")
+    void removeBlockShouldDecodeClassic0143IntegerCoordinates() {
+        BinaryStream input = new BinaryStream();
+        input.putInt(12);
+        input.putInt(65);
+        input.putInt(-3);
+
+        RemoveBlockPacket packet = new RemoveBlockPacket();
+        packet.protocol = ProtocolInfo.v0_14_3;
+        packet.setBuffer(input.getBuffer(), 0);
+        packet.decode();
+
+        assertAll(
+                () -> assertEquals(12, packet.x),
+                () -> assertEquals(65, packet.y),
+                () -> assertEquals(-3, packet.z)
+        );
+    }
+
+    @Test
     @DisplayName("0.14.x 出站批量包应保持整型长度前缀")
     void outgoingLegacy014BatchShouldKeepIntLengthPrefix() throws Exception {
         FullChunkDataPacket packet = new FullChunkDataPacket();

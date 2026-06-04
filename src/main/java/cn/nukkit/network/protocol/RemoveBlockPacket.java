@@ -15,10 +15,16 @@ public class RemoveBlockPacket extends DataPacket {
 
     @Override
     public void decode() {
-        BlockVector3 v = this.getBlockCoords();
-        this.x = v.x;
-        this.y = v.y;
-        this.z = v.z;
+        if (ProtocolInfo.isBefore0160(this.protocol)) {
+            this.x = this.getInt();
+            this.y = this.getInt();
+            this.z = this.getInt();
+        } else {
+            BlockVector3 v = this.getBlockCoords();
+            this.x = v.x;
+            this.y = v.y;
+            this.z = v.z;
+        }
     }
 
     @Override

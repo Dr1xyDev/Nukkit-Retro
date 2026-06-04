@@ -144,6 +144,24 @@ class Legacy015PacketTest {
     }
 
     @Test
+    @DisplayName("RemoveBlock 应在 0.16+ 使用变长坐标解码")
+    void removeBlockShouldDecode016VarIntCoordinates() {
+        BinaryStream input = new BinaryStream();
+        input.putBlockCoords(12, 65, -3);
+
+        RemoveBlockPacket packet = new RemoveBlockPacket();
+        packet.protocol = ProtocolInfo.v0_16_0;
+        packet.setBuffer(input.getBuffer(), 0);
+        packet.decode();
+
+        assertAll(
+                () -> assertEquals(12, packet.x),
+                () -> assertEquals(65, packet.y),
+                () -> assertEquals(-3, packet.z)
+        );
+    }
+
+    @Test
     @DisplayName("MovePlayer 应按 0.15.x 旧字段顺序解码")
     void movePlayerShouldDecodeClassic015Layout() {
         BinaryStream input = new BinaryStream();

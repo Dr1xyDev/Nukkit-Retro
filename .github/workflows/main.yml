@@ -12,12 +12,12 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
     
     - name: Set up JDK 8
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '8'
         distribution: 'temurin'
@@ -36,7 +36,7 @@ jobs:
       run: mvn clean package
     
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: success()
       with:
         name: nukkit-retro-build
@@ -44,7 +44,7 @@ jobs:
         retention-days: 30
     
     - name: Test Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-results

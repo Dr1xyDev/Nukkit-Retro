@@ -123,6 +123,7 @@ public class AdventureSettings implements Cloneable {
         AdventureSettingsPacket pk = new AdventureSettingsPacket();
         pk.flags = 0;
         pk.worldImmutable = !canDestroyBlock;
+        pk.worldBuilder = canDestroyBlock;
         pk.autoJump = autoJump;
         pk.allowFlight = canFly;
         pk.noClip = noclip;
@@ -132,6 +133,7 @@ public class AdventureSettings implements Cloneable {
         pk.noMvp = noMvp;
         pk.muted = muted;
         pk.userPermission = (this.player.isOp() ? PERMISSION_OPERATOR : PERMISSION_NORMAL);
+        pk.globalPermission = PERMISSION_OPERATOR;
         player.dataPacket(pk);
 
         player.resetInAirTicks();

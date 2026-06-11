@@ -2088,6 +2088,7 @@ public class Player extends EntityHuman implements CommandSender, InventoryHolde
                         this.getAdventureSettings().update();
                     } else {
                         this.getAdventureSettings().setFlying(playerToggleFlightEvent.isFlying());
+                        this.getAdventureSettings().update();
                     }
                     break;
                 case ProtocolInfo.MOB_EQUIPMENT_PACKET:

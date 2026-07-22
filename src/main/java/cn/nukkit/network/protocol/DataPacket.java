@@ -76,7 +76,12 @@ public abstract class DataPacket extends BinaryStream implements Cloneable {
 
             int count = this.getByte() & 0xff;
             int data = this.getShort();
-            int nbtLen = this.getLShort();
+            int nbtLen = 0;
+            if(this.protocol > ProtocolInfo.v0_13_2){
+                nbtLen = this.getLShort();
+            }else{
+                nbtLen = this.getShort();
+            }
             byte[] nbt = nbtLen > 0 ? this.get(nbtLen) : new byte[0];
 
             return Item.get(id, data, count, nbt);
@@ -96,7 +101,11 @@ public abstract class DataPacket extends BinaryStream implements Cloneable {
             this.putByte((byte) item.getCount());
             this.putShort(item.hasMeta() ? item.getDamage() : -1);
             byte[] nbt = item.getCompoundTag();
-            this.putLShort(nbt.length);
+            if(this.protocol > ProtocolInfo.v0_13_2){
+                this.putLShort(nbt.length);
+            }else{
+                this.putShort(nbt.length);
+            }
             this.put(nbt);
             return;
         }

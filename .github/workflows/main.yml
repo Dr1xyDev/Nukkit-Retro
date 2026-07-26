@@ -1,0 +1,29 @@
+name: Manual-Compile
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Java 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: maven
+          
+      - name: Build with Maven
+        # 移除 --fail-never，這樣如果有錯才會噴出來，我們才好修
+        run: |
+          mvn versions:use-latest-releases -Dincludes=com.google.guava:guava
+          mvn clean package -DskipTests
+        
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: My-Nukkit-Jar
+          path: "**/*.jar" # 擴大搜索範圍，確保能抓到檔案

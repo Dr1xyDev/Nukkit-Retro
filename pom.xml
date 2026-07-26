@@ -5,7 +5,7 @@
     <name>Nukkit-Retro</name>
     <groupId>cn.nukkit</groupId>
     <artifactId>nukkit-retro</artifactId>
-    <version>SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -59,6 +59,18 @@
             <url>https://repo.okaeri.cloud/releases</url>
         </repository>
     </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Fixes DependencyConvergence: guava:33.6.0-jre pulls 2.47.0
+                 while gson:2.13.2 pulls 2.41.0 — pin to latest to satisfy both. -->
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_annotations</artifactId>
+                <version>2.47.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
